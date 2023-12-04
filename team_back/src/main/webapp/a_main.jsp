@@ -20,14 +20,44 @@
 			alert("요청게시판으로 이동합니다.");
 		});//#list_png
 		
+		
+		$(".mpg1").click(function(){
+			$("#modal_box").removeClass("popOff");
+			$("#modal_box").addClass("popOn");
+			
+		});//#button(모달창 띄우기)
+		
+		$("#delBtn").click(function(){
+			$("#modal_box").removeClass("popOn");
+			$("#modal_box").addClass("popOff");
+		});//
+		
 	});//제이쿼리 구문 최신
 	</script>
 	<style>
-	   .loc{position: relative; top:-50px; width:96px; text-align: center; }
+	   .loc{position: relative; top:-50px; width:96px; text-align: center; font-size: 13px; padding-top: 3px;}
 	   a{text-decoration: none; color: #fff;}
 	</style>
 	</head>
 	<body>
+	<!-- 모달창 즐겨찾기 -->
+	<div id="modal_box" class="popOff">
+			<div id="modal_cont">
+				<h1 id="f_title">즐겨찾기 추가</h1>
+				
+				<form method="get" id="modalF" action="#">
+					<div id ="desc">
+						&nbsp<label>이&nbsp&nbsp름</label><br>
+						<input type="text" name="webName" id="webName" placeholder=" ☞ 사이트 이름 | ex)  네이버, 다음, Google"><br><br>
+						&nbsp<label>U&nbspR&nbspL</label><br>
+						<input type="text" name="webURL" id="webName" placeholder=" ☞ url주소를 입력하세요. | ex) https://www.naver.com/">
+					</div>
+					<button type="button" class="button" id="delBtn">취소</button>
+					<button type="button" class="button" >추가</button>
+				</form>
+			</div>
+		</div>
+		<!-- 모달창 끝 -->
 		<table>
 		<div class="bg-video">
 			<video class="bg-video_content" autoplay muted loop>
@@ -58,63 +88,71 @@
 				<!-- 이미지링크 -->
 				<div>
 					<ul>
-					    <c:forEach var="num" begin="0" end="7">
 						<li>
-						  <a href=<c:choose>
-	                          <c:when test='${num == 0}'>https://github.com/</c:when>
-	                          <c:when test='${num == 1}'>https://www.mockaroo.com/</c:when>
-	                          <c:when test='${num == 2}'>https://www.data.go.kr/</c:when>
-	                          <c:when test='${num == 3}'>http://json.parser.online.fr/</c:when>
-	                          <c:when test='${num == 4}'>https://nid.naver.com/nidlogin.login?mode=form&url=https://cafe.naver.com/koreaitbigdata</c:when>
-	                          <c:when test='${num == 5}'>https://fonts.google.com/</c:when>
-	                          <c:when test='${num == 6}'>https://www.tutorialspoint.com/online_xml_formatter.htm</c:when>
-	                          <c:when test='${num == 7}'>https://us06web.zoom.us/j/5201428216?pwd=bk9hT0ppVithT2JKblJNQTIzbktNUT09#success</c:when>
-                     		</c:choose> target="_blank" class="mpg">
-						  <c:if test="${num/4<1}">
-							  <img src="images/link1.png">
-							  <div class="loc">gitHub</div>
-						  </c:if>
-						  <c:if test="${num/4>=1}">
-							  <img src="images/link2.png">
-							  <div class="loc">xml</div>
-						  </c:if>
+						<a href=https://github.com/ target="_blank" class="mpg"><img src="images/link1.png">
+						<div class="loc">GITHUB</div>
 						</a>
 						</li>
-					    </c:forEach>
 						<li>
+						<a href="https://www.mockaroo.com/" target="_blank" class="mpg"><img src="images/link1.png">
+						<div class="loc">MOCKAROO</div>
+						</a>
+						</li>
+						<li>
+						<a href="https://www.data.go.kr/index.do" target="_blank" class="mpg"><img src="images/link1.png">
+						<div class="loc">공공데이터</div>
+						</a>
+						</li>
+						<li>
+						<a href="http://json.parser.online.fr/" target="_blank" class="mpg"><img src="images/link1.png">
+						<div class="loc">JSON</div>
+						</a>
+						</li>
+						<li>
+						<a href="https://cafe.naver.com/koreaitbigdata" target="_blank" class="mpg"><img src="images/link2.png">
+						<div class="loc">JAVA Dev</div>
+						</a>
+						</li>
+						<li>
+						<a href="https://fonts.google.com/?subset=korean&noto.script=Kore" target="_blank" class="mpg"><img src="images/link2.png">
+						<div class="loc">WEBFONT</div>
+						</a>
+						</li>
+						<li>
+						<a href="https://elmah.io/tools/xml-formatter/" target="_blank" class="mpg"><img src="images/link2.png">
+						<div class="loc">XML</div>
+						</a>
+						</li>
+						<li>
+						<a href="https://us06web.zoom.us/j/5201428216?pwd=bk9hT0ppVithT2JKblJNQTIzbktNUT09" target="_blank" class="mpg"><img src="images/link2.png">
+						<div class="loc">ZOOM</div>
+						</a>
+						</li>
 					</ul>
 					<ul id="ul2">
 						<li>
-						<c:if test="pno==null">
-							<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</c:if>
-						<c:if test="">
-							<a href="임의로 입력한 url" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</c:if>
+						<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://www.mockaroo.com/" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://www.data.go.kr/index.do" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="http://json.parser.online.fr/" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://cafe.naver.com/koreaitbigdata" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://fonts.google.com/?subset=korean&noto.script=Kore" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://elmah.io/tools/xml-formatter/" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 						<li>
-						<a href="https://us06web.zoom.us/j/5201428216?pwd=bk9hT0ppVithT2JKblJNQTIzbktNUT09" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="https://us06web.zoom.us/j/5201428216?pwd=bk9hT0ppVithT2JKblJNQTIzbktNUT09" target="_blank" class="mpg"><img src="images/plus.png"></a>
+						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
 						</li>
 					</ul>
 				</div>

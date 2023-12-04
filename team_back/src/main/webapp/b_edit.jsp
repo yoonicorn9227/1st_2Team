@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>요청게시글 수정 - b-edit.jsp</title>
     <link rel="stylesheet" href="css/css.css">
      <style>
@@ -17,23 +18,32 @@
 		nav{padding: 25px; position: absolute;top: 0; right: 0;}
 		nav li {display: inline-block; margin: 0 20px;}
 		nav a {font-size: 1.4rem;color: #FFD500; font-size: 20px;}
+		#logo_name{font-size: 1.4rem; color: #FFD500; font-size: 20px;}
 		nav a:hover {text-decoration: underline;}
 		.border{color: #FFD500; font-weight: 700; font-size: 20px; margin-top: 120px;}
 		#team{position: relative; left: 500px;}
-		#info_m{width: 350px;}
+		#id{width: 350px;}
 	</style>
+	<script>
+		$(function(){
+			$(".on").click(function(){
+				alert("파일을 첨부합니다.");
+				e_frm.submit();
+			})
+		})
+	</script>
 </head>
 <header>
    	 <h1 class="logo"><a href="">JJAGEUL</a></h1>
     	<nav>
 	    	<ul>
-		        <li><a href="">땡땡땡님</a></li>
-		        <li class="border">|</li>
-		        <li><a href="">회원정보</a></li>
-		        <li class="border">|</li>
-		        <li><a href="">로그아웃</a></li>
-		        <li class="border">|</li>
-		        <li><a href="">요청게시판</a></li>
+		        <li id="logo_name">${session_name}님</li>
+				<li class="border">|</li>
+				<li><a href="a_myPage.do">회원정보</a></li>
+				<li class="border">|</li>
+				<li><a href="a_logout.do">로그아웃</a></li>
+				<li class="border">|</li>
+				<li><a href="a_main.do">메인페이지</a></li>
 	    	</ul>
 		</nav>
 	</header>
@@ -44,36 +54,39 @@
             <strong>게시글 수정</strong>
             <p>요청게시판 게시글을 수정합니다.</p>
         </div>
+        <form name="e_frm" method="post" action="doB_edit.do" enctype="multipart/form-data">
         <div class="board_write_wrap">
             <div class="board_write">
-                <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" value="글 제목이 들어갑니다"></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>글쓴이</dt>
-                        <dd><input type="text" placeholder="글쓴이 입력" value="김이름"></dd>
-                    </dl>
-                    <dl>
-                        <dt>비밀번호</dt>
-                        <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
-                    </dl>
-                </div>
-                <div class="cont">
-                    <textarea placeholder="내용 입력">
-글 수정글이 들어갑니다
-
-				</textarea>
-                </div>
+               <div class="title">
+              	<input type="hidden" name="page" value="${page}">
+              	<input type="hidden" name="bsno" value="${sbdto.bsno}">
+		     	<input type="hidden" name="id" value="${session_id}">
+		    	<input type="hidden" name="oldfile" value="${sbdto.bfile}">
+					<dl>
+						<dt>제목</dt>
+						<dd><input type="text"  name="btitle" id="btitle" value="${sbdto.btitle}"></dd>
+					</dl>
+				</div>
+				<div class="info">
+					<dl>
+						<dt>글쓴이</dt>
+						<dd><input type="text" name="id" id="id"  value="${session_id}" readonly></dd>
+					</dl>
+					<dl>
+						<dt>첨부파일</dt>
+						<dd><input type="file" name="bfile" id="bfile">${sbdto.bfile}</dd>
+					</dl>
+				</div>
+				<div class="cont">
+					<textarea name="bcontent" id="bcontent">${sbdto.bcontent}</textarea>
+				</div>
             </div>
             <div class="bt_wrap">
-                <a href="view.html" class="on">수정</a>
-                <a href="view.html">취소</a>
+                <a class="on">작성글 수정</a>
+                <a href="b_write.do">취소</a>
             </div>
         </div>
+        </form>
     </div>
     <footer>
 		<div id="team">
