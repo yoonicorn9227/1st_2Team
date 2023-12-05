@@ -25,6 +25,7 @@
 		.border{color: #FFD500; font-weight: 700; font-size: 20px; margin-top: 120px;}
 		#team{position: relative; left: 500px;}
 		#info_m{width: 350px;}
+		#bfile:hover{text-decoration: underline; color: blue; font-weight: 700}
 	</style>
 	
 	<script>
@@ -77,9 +78,9 @@
                         <dt>작성일</dt>
                         <dd><fmt:formatDate value="${sbdto.bdate}" pattern="yyyy-MM-dd"/></dd>
                     </dl>
-                    <dl>
-                        <dt>첨부파일</dt>
-                        <dd>${sbdto.bfile}</dd>
+                  	<dl>
+                      <dt>첨부파일</dt>
+                      <dd id="bfile"><a href="upload/${sbdto.bfile}" target="_blank">${sbdto.bfile}</a></dd>
                     </dl>
                 </div>
                 <div class="cont">

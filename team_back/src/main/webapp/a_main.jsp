@@ -32,31 +32,39 @@
 			$("#modal_box").addClass("popOff");
 		});//
 		
+		
+		$("#addBtn").click(function(){
+			alert("즐겨찾기 주소를 추가합니다.");
+		});//#addBtn
+		
 	});//제이쿼리 구문 최신
 	</script>
 	<style>
 	   .loc{position: relative; top:-50px; width:96px; text-align: center; font-size: 13px; padding-top: 3px;}
+	   .loc3{position: relative; top:-50px; width:96px; text-align: center; font-size: 13px; padding-top: 3px;}
+	   .loc4{position: relative; top: -50px; width:96px; text-align: center; font-size: 13px; padding-top: 3px;}
 	   a{text-decoration: none; color: #fff;}
 	</style>
 	</head>
 	<body>
 	<!-- 모달창 즐겨찾기 -->
+	<c:if test="${session_id!=null}">
 	<div id="modal_box" class="popOff">
 			<div id="modal_cont">
 				<h1 id="f_title">즐겨찾기 추가</h1>
-				
 				<form method="get" id="modalF" action="#">
 					<div id ="desc">
-						&nbsp<label>이&nbsp&nbsp름</label><br>
-						<input type="text" name="webName" id="webName" placeholder=" ☞ 사이트 이름 | ex)  네이버, 다음, Google"><br><br>
-						&nbsp<label>U&nbspR&nbspL</label><br>
-						<input type="text" name="webURL" id="webName" placeholder=" ☞ url주소를 입력하세요. | ex) https://www.naver.com/">
+						&nbsp<label><p>이&nbsp&nbsp름</p></label>
+						<input type="text" name="webName" id="webName" value="${ldto.pname}" placeholder=" ☞ 사이트 이름 | ex)  네이버, 다음, Google"><br><br>
+						&nbsp<label><p>U&nbspR&nbspL</p></label>
+						<input type="text" name="webURL" id="webName" value="${ldto.purl}" placeholder=" ☞ url주소를 입력하세요. | ex) https://www.naver.com/">
 					</div>
 					<button type="button" class="button" id="delBtn">취소</button>
 					<button type="button" class="button" >추가</button>
 				</form>
 			</div>
 		</div>
+	</c:if>
 		<!-- 모달창 끝 -->
 		<table>
 		<div class="bg-video">
@@ -130,33 +138,31 @@
 						</li>
 					</ul>
 					<ul id="ul2">
-						<li>
-						<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
-						<li>
-						<a href="#" target="_blank" class="mpg"><img src="images/plus.png"></a>
-						</li>
+								<c:if test="${list==null}">
+									<c:forEach var="pageColor" begin="1" end="8" step="1">
+										<li>
+											<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
+										</li>
+									</c:forEach>
+								</c:if>
+								<c:if test="${list!=null}">
+								<!-- 8번반복 -->
+									<c:forEach items="${list}" var="ldto" varStatus="vs">
+											<c:if test="${ldto.purl!=null}">
+												<li>
+													<a href=${ldto.purl } target="_blank" class="mpg mpg1" id="modal"><img src="images/link3.png"><div class="loc3">${ldto.pname}</div></a>
+												</li>
+											</c:if>
+											<c:if test="${ldto.purl==null}">
+												<li>
+													<a href="#" target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"><div class="loc3">${ldto.pname}</div></a>
+												</li>
+											</c:if>
+									</c:forEach>
+								</c:if>
 					</ul>
 				</div>
-				<h1 id="h1"><strong style=" color:#0038a8";>JJA</strong>GEUL</h1>
+				<h1 id="h1"><strong style=" color:#0038a8">JJA</strong>GEUL</h1>
 				<h3>
 					한국 직업전문학교 copyright © ★항공 JAVA 풀스택 개발자 양성과정 5기★ - 2팀( 최창윤 | 조민진 | 정보람 | 김승우 )
 				</h3>

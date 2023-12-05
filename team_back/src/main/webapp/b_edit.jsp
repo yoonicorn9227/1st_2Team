@@ -83,7 +83,7 @@
             </div>
             <div class="bt_wrap">
                 <a class="on">작성글 수정</a>
-                <a href="b_write.do">취소</a>
+                <a href="b_list.do">취소</a>수정
             </div>
         </div>
         </form>

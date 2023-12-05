@@ -18,6 +18,7 @@ import com.java.www.service.Ser_Login;
 import com.java.www.service.Ser_MDoSingUp;
 import com.java.www.service.Ser_MSelectOne;
 import com.java.www.service.Ser_MUpdate;
+import com.java.www.service.Ser_MainModal;
 import com.java.www.service.Ser_Reply;
 import com.java.www.service.Ser_Write;
 import com.java.www.service.Ser_doMUpdate;
@@ -54,7 +55,9 @@ public class T2_FController extends HttpServlet {
 			response.sendRedirect("a_logout.jsp");
 			break;
 		case "/a_main.do": // 4.메인 페이지
-			url = "a_main.jsp";
+			service = new Ser_MainModal();
+			service.execute(request, response);
+			url="a_main.jsp";
 			break;
 		case "/a_myPage.do": // 5.회원정보 페이지 - DB접근필요
 			service = new Ser_MSelectOne();
