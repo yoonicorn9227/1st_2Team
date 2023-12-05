@@ -139,7 +139,7 @@
 					</ul>
 					<ul id="ul2">
 								<c:if test="${list==null}">
-									<c:forEach var="pageColor" begin="1" end="8" step="1">
+									<c:forEach begin="1" end="8" step="1">
 										<li>
 											<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
 										</li>
@@ -149,13 +149,20 @@
 								<!-- 8번반복 -->
 									<c:forEach items="${list}" var="ldto" varStatus="vs">
 											<c:if test="${ldto.purl!=null}">
-												<li>
-													<a href=${ldto.purl } target="_blank" class="mpg mpg1" id="modal"><img src="images/link3.png"><div class="loc3">${ldto.pname}</div></a>
-												</li>
+												<c:if test="${vs.index<4 }">
+													<li>
+														<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link3.png"><div class="loc3">${ldto.pname}</div></a>
+													</li>
+												</c:if>
+												<c:if test="${vs.index>=4 }">
+													<li>
+														<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link4.png"><div class="loc3">${ldto.pname}</div></a>
+													</li>
+												</c:if>
 											</c:if>
 											<c:if test="${ldto.purl==null}">
 												<li>
-													<a href="#" target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"><div class="loc3">${ldto.pname}</div></a>
+													<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"><div class="loc3">${ldto.pname}</div></a>
 												</li>
 											</c:if>
 									</c:forEach>
