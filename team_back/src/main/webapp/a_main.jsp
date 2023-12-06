@@ -12,6 +12,7 @@
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 	$(function(){
+		var location1;
 		$("#my_png").click(function(){
 			alert("회원정보 보기 페이지로 이동합니다.");
 		});//#my_png
@@ -20,8 +21,11 @@
 			alert("요청게시판으로 이동합니다.");
 		});//#list_png
 		
-		
 		$(".mpg1").click(function(){
+			console.log("현재 배열 개수 : "+$(".mpg1").length);
+			console.log("현재 배열 클릭 위치 : "+$(".mpg1").index(this));
+			location1 = $(this);
+			console.log("현재 위치점 : "+$(this));
 			$("#modal_box").removeClass("popOff");
 			$("#modal_box").addClass("popOn");
 			
@@ -32,8 +36,50 @@
 			$("#modal_box").addClass("popOff");
 		});//
 		
-		
 		$("#addBtn").click(function(){
+			alert("현재위치점 : "+location1);
+			console.log(location1);
+			if($("#webName").val().length<1) {
+				alert("사이트 이름을 입력하세요!")
+			}//if
+			
+			if($("#webURL").val().length<1) {
+				alert("사이트 URL을 입력하세요!")
+			}//if
+		
+			<!--모달창 ajax-->
+			//입력내용 가져오기
+			var id = "${session_id}";
+			var webName = $("#webName").val();
+			var webURL = $("#webURL").val();
+			
+			$.ajax({
+				url : "MD_Insert",
+				type:"post",
+				data:{"id":id, "webName":webName,"webURL":webURL},
+				dataType:"json",
+				success:function(data){
+					alert("성공");
+					console.log(data);
+					
+					//즐겨찾기 등록 태그
+					var pageHtml='';
+					
+					pageHtml += '<a href='+webURL+'target="_blank" class="mpg" id="modal">';
+					pageHtml += '<img src="images/link3.png">';
+					pageHtml += '<div class="loc3">'+webName+'</div>';
+					pageHtml += '</a>';
+					pageHtml += '</div>';
+					
+					//즐겨찾기 등록
+					$(location1).html(pageHtml);
+					
+					
+				},//success
+				error:function(){
+					alert("실패");
+				}//error
+			});//ajax
 			alert("즐겨찾기 주소를 추가합니다.");
 		});//#addBtn
 		
@@ -52,15 +98,15 @@
 	<div id="modal_box" class="popOff">
 			<div id="modal_cont">
 				<h1 id="f_title">즐겨찾기 추가</h1>
-				<form method="get" id="modalF" action="#">
+				<form name="ModalFrm" method="get" id="modalF">
 					<div id ="desc">
 						&nbsp<label><p>이&nbsp&nbsp름</p></label>
 						<input type="text" name="webName" id="webName" value="${ldto.pname}" placeholder=" ☞ 사이트 이름 | ex)  네이버, 다음, Google"><br><br>
 						&nbsp<label><p>U&nbspR&nbspL</p></label>
-						<input type="text" name="webURL" id="webName" value="${ldto.purl}" placeholder=" ☞ url주소를 입력하세요. | ex) https://www.naver.com/">
+						<input type="text" name="webURL" id="webURL" value="${ldto.purl}" placeholder=" ☞ url주소를 입력하세요. | ex) https://www.naver.com/">
 					</div>
-					<button type="button" class="button" id="delBtn">취소</button>
-					<button type="button" class="button" >추가</button>
+					<button type="button" class="buttonM" id="delBtn">취소</button>
+					<button type="button" class="buttonM" id="addBtn" >추가</button>
 				</form>
 			</div>
 		</div>
@@ -139,7 +185,7 @@
 					</ul>
 					<ul id="ul2">
 								<c:if test="${list==null}">
-									<c:forEach begin="1" end="8" step="1">
+									<c:forEach begin="1" end="8" step="1" varStatus="vs">
 										<li>
 											<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
 										</li>
@@ -155,17 +201,19 @@
 													</li>
 												</c:if>
 												<c:if test="${vs.index>=4 }">
-													<li>
-														<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link4.png"><div class="loc3">${ldto.pname}</div></a>
-													</li>
+														<li>
+															<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link4.png"><div class="loc3">${ldto.pname}</div></a>
+														</li>
 												</c:if>
 											</c:if>
+									</c:forEach>
+								<c:forEach var="c" begin="${list_size+1}" end="8" step="1">
 											<c:if test="${ldto.purl==null}">
 												<li>
-													<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"><div class="loc3">${ldto.pname}</div></a>
+													<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
 												</li>
 											</c:if>
-									</c:forEach>
+								</c:forEach>
 								</c:if>
 					</ul>
 				</div>

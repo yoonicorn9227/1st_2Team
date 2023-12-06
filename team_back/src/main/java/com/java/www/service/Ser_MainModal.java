@@ -30,7 +30,10 @@ public class Ser_MainModal implements Service {
 		
 		// request추가
 		request.setAttribute("list", list);
-
+		if(list!=null) {
+			request.setAttribute("list_size", list.size());
+		}
+		
 	}// execute(Ser_MainModal)
 
 }// CLASS(모달창 - 즐겨찾기)
