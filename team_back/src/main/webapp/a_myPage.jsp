@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입-a_signUp.jsp</title>
+    <title>회원가입-a_myPage.jsp</title>
     <link rel="stylesheet" href="css/a_myPage.css">
    	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <c:if test="${session_id==null}">

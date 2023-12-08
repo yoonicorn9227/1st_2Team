@@ -11,6 +11,11 @@ public class linkDto {
 	public linkDto() {
 	}// 기본생성자
 
+	public linkDto(int pno) {
+		this.pno = pno;
+		
+	}// 1개 생성자
+	
 	public linkDto(int pno, String id, String pname, String purl) {
 		this.pno = pno;
 		this.id = id;

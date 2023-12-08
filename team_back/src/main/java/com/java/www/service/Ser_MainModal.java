@@ -26,7 +26,6 @@ public class Ser_MainModal implements Service {
 		// dao접근
 		linkDao ldao = new linkDao();
 		ArrayList<linkDto> list = ldao.dao_ModalInstList(id);
-		System.out.println("Ser list : " + list);
 		
 		// request추가
 		request.setAttribute("list", list);

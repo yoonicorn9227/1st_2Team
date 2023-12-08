@@ -4,6 +4,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <c:if test="${session_id==null}">
+		<script>
+			alert("로그인을 해야만 접속이 가능합니다.");
+			location.href="a_login.do";
+		</script>
+	</c:if>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>요청게시글 수정 - b-edit.jsp</title>

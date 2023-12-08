@@ -356,6 +356,197 @@ public class Stu_boardDao {
 		return result;
 	}
 	
+	//이전글
+		public Stu_boardDto preSelectOne(int bsno2) {
+			try {
+				conn = getConnection();
+				query="select * from (select row_number() over(order by bgroup desc, bstep asc) rnum, a.* from stu_board a) where rnum = (select rnum from (select row_number() over(order by bgroup desc, bstep asc) rnum, a.* from stu_board a) where bsno=?)+1";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, bsno2);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					bsno = rs.getInt("bsno");
+					btitle = rs.getString("btitle");
+					bcontent = rs.getString("bcontent");
+					bdate = rs.getTimestamp("bdate");
+					id = rs.getString("id");
+					bgroup = rs.getInt("bgroup");
+					bstep = rs.getInt("bstep");
+					bindent = rs.getInt("bindent");
+					bhit = rs.getInt("bhit");
+					bfile = rs.getString("bfile");
+					sbdto = new Stu_boardDto(bsno, btitle, bcontent, bdate, id, bgroup, bstep, bindent, bhit, bfile);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e2) { e2.printStackTrace();}
+			}//
+			return sbdto;
+		}//preSelectOne
+		
+		//다음글
+		public Stu_boardDto nextSelectOne(int bsno2) {
+			try {
+				conn = getConnection();
+				query="select * from (select row_number() over(order by bgroup desc, bstep asc) rnum, a.* from stu_board a) where rnum = (select rnum from (select row_number() over(order by bgroup desc, bstep asc) rnum, a.* from stu_board a) where bsno=?)-1";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, bsno2);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					bsno = rs.getInt("bsno");
+					btitle = rs.getString("btitle");
+					bcontent = rs.getString("bcontent");
+					bdate = rs.getTimestamp("bdate");
+					id = rs.getString("id");
+					bgroup = rs.getInt("bgroup");
+					bstep = rs.getInt("bstep");
+					bindent = rs.getInt("bindent");
+					bhit = rs.getInt("bhit");
+					bfile = rs.getString("bfile");
+					sbdto = new Stu_boardDto(bsno, btitle, bcontent, bdate, id, bgroup, bstep, bindent, bhit, bfile);
+				}	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e2) { e2.printStackTrace();}
+			}//
+			return sbdto;
+		}//nextSelectOne
+		
+		//조회수
+				public void bhitup(int bsno2) {
+					try {
+						conn = getConnection();
+						query = "update stu_board set bhit = bhit+1 where bsno=?";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, bsno2);
+						pstmt.executeUpdate();
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(rs!=null) rs.close();
+							if(pstmt!=null) pstmt.close();
+							if(conn!=null) conn.close();
+						} catch (Exception e2) { e2.printStackTrace();}
+					}//
+					
+				}//bhitup
+				
+				
+			
+			//좋아요 (내가 좋아요 누른 상태 - select)
+			public int myLikeSelect(String id2, int bsno2) {
+				int my_like_count =0;
+				try {
+					conn = getConnection();
+					query = "select count(*) my_like_count from s_likes where bsno=? and id=? and like_status=1";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, bsno2);
+					pstmt.setString(2, id2);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						my_like_count = rs.getInt("my_like_count");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt!=null) pstmt.close();
+						if(conn!=null) conn.close();
+					} catch (Exception e2) { e2.printStackTrace();}
+				}//
+				return my_like_count;
+			}//myLikeSelect
+			
+			//좋아요 (전체 좋아요 개수 - select)
+			public int allLikeSelect(int bsno2) {
+				int all_like_count = 0;
+				try {
+					conn = getConnection();
+					query = "select count(*) all_like_count from s_likes where bsno=? and like_status=1";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, bsno2);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						all_like_count = rs.getInt("all_like_count");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt!=null) pstmt.close();
+						if(conn!=null) conn.close();
+					} catch (Exception e2) { e2.printStackTrace();}
+				}//
+				return all_like_count;
+			}//allLikeSelect
+			
+			//
+			public int myLikeUpdate(String id2, int bsno2, int like_status) {
+				int all_like_count = 0;
+				try {
+					conn = getConnection();
+					
+					//내가 좋아요를 누른 적이 있는지 체크
+					query = "select count(*) count from s_likes where bsno=? and id=?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, bsno2);
+					pstmt.setString(2, id2);
+					rs = pstmt.executeQuery();
+					int count = 0;
+					if(rs.next()) {
+						count = rs.getInt("count");
+					}
+					if(count==0) {
+						//내가 좋아요 누른 적이 없을때 - insert
+						query = "insert into s_likes values (s_likes_seq.nextval, ?,?,?)";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, bsno2);
+						pstmt.setString(2, id2);
+						pstmt.setInt(3, like_status);
+						pstmt.executeUpdate();
+					}else {
+						//내가 좋아요 누른적이 있을때 - update
+						query = "update s_likes set like_status=? where bsno=? and id=?";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setInt(1, like_status);
+						pstmt.setInt(2, bsno2);
+						pstmt.setString(3, id2);
+						pstmt.executeUpdate();
+					}
+					//좋아요 전체
+					all_like_count = allLikeSelect(bsno2);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt!=null) pstmt.close();
+						if(conn!=null) conn.close();
+					} catch (Exception e2) { e2.printStackTrace();}
+				}//
+				return all_like_count;
+			}//myLikeUpdate
+	
+	
+	
 	
 	
 }// BoardDao

@@ -6,6 +6,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <c:if test="${session_id==null}">
+		<script>
+			alert("로그인을 해야만 접속이 가능합니다.");
+			location.href="a_login.do";
+		</script>
+	</c:if>
     <title>회원가입-MUpdate.jsp</title>
     <link rel="stylesheet" href="css/a_signUp.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>

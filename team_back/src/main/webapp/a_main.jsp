@@ -5,6 +5,12 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<c:if test="${session_id==null}">
+		<script>
+			alert("로그인을 해야만 접속이 가능합니다.");
+			location.href="a_login.do";
+		</script>
+	</c:if>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.cdnfonts.com/css/nasa" rel="stylesheet">
 	<title>main</title>
@@ -21,7 +27,7 @@
 			alert("요청게시판으로 이동합니다.");
 		});//#list_png
 		
-		$(".mpg1").click(function(){
+		$(".mpg_1").click(function(){
 			console.log("현재 배열 개수 : "+$(".mpg1").length);
 			console.log("현재 배열 클릭 위치 : "+$(".mpg1").index(this));
 			location1 = $(this);
@@ -41,10 +47,12 @@
 			console.log(location1);
 			if($("#webName").val().length<1) {
 				alert("사이트 이름을 입력하세요!")
+				return false;
 			}//if
 			
 			if($("#webURL").val().length<1) {
 				alert("사이트 URL을 입력하세요!")
+				return false;
 			}//if
 		
 			<!--모달창 ajax-->
@@ -59,30 +67,70 @@
 				data:{"id":id, "webName":webName,"webURL":webURL},
 				dataType:"json",
 				success:function(data){
-					alert("성공");
+					//alert("성공");
 					console.log(data);
-					
 					//즐겨찾기 등록 태그
 					var pageHtml='';
-					
-					pageHtml += '<a href='+webURL+'target="_blank" class="mpg" id="modal">';
+					pageHtml += '<a href='+webURL+' target="_blank" class="mpg" style="height:96px;">';
 					pageHtml += '<img src="images/link3.png">';
 					pageHtml += '<div class="loc3">'+webName+'</div>';
 					pageHtml += '</a>';
+					pageHtml += '<div class="M_delBtn" id="'+data.pno+'">';
+					pageHtml += '<i class="fa fa-trash" aria-hidden="true"><strong style="font-family: fontYouandiModernTR;"></strong></i>';
 					pageHtml += '</div>';
-					
 					//즐겨찾기 등록
-					$(location1).html(pageHtml);
 					
+					$(location1).removeClass("mpg_1");
+					$(location1).html(pageHtml);
+					location.reload(true); //자동새로고침
 					
 				},//success
-				error:function(){
-					alert("실패");
-				}//error
-			});//ajax
-			alert("즐겨찾기 주소를 추가합니다.");
+				error:function(){alert("실패");}//error
+			});//ajax(즐겨찾기 추가)
+			//alert("즐겨찾기 주소를 추가합니다.");
 		});//#addBtn
 		
+		$(".M_delBtn").click(function(){
+			//alert("삭제 test");
+			//alert($(this).attr("id"));
+			var id ="${session_id}";
+			var pno = $(this).attr("id");
+			$.ajax({
+				url:"MD_Delete",
+				type:"post",
+				data:{"id" : id, "pno" : pno},
+				dataType : "json",
+				success:function(data){
+				console.log(data);
+				//alert("성공");
+				//즐겨찾기 Plus 등록 태그
+					
+				var DelHtml = '';
+				DelHtml += '<a target="_blank" class="mpg Plus">';
+				DelHtml += '<img src="images/plus.png">';
+				DelHtml += '</a>';
+				
+				$(location1).html(DelHtml);
+				location.reload(true);
+				},//success
+				error:function(){alert("실패");}//error
+			
+			});//ajax
+			
+		});//.B_delBtn(바로가기 삭제)
+		
+		//----------qr모달 시작------------
+	    // qr 모달창 외부 클릭 시 닫기
+	    $(document).on('click', function (event) {
+	        if (!$(event.target).closest('#modal_qr, #qr_con').length) {
+	            $('#modal_qr').removeClass('popOn2').addClass('popOff2');
+	        }
+	    });
+	    // qr_con 버튼 클릭 시 미니 모달창 열기
+	    $('#qr_con').click(function () {
+	        $('#modal_qr').removeClass('popOff2').addClass('popOn2');
+	    });
+	  //----------qr모달 끝------------
 	});//제이쿼리 구문 최신
 	</script>
 	<style>
@@ -112,6 +160,12 @@
 		</div>
 	</c:if>
 		<!-- 모달창 끝 -->
+		<!--미니 모달창 시작 QR  -->
+		<div id="modal_qr" class="popOff2">
+			<img src="images/qr_01.png" >
+			
+		</div>
+		<!--미니 모달창 QR  끝 -->
 		<table>
 		<div class="bg-video">
 			<video class="bg-video_content" autoplay muted loop>
@@ -131,16 +185,25 @@
 			<!-- 게시판 -->
 			<div id="center">
 				<ul id="menu">
-					<li id="menu_my">
-					<a href="a_myPage.do"><img src="images/my_1.png" id="my_png"></a>
+				   <!--미니 버튼 시작 -->
+					<div id="qr_con">
+						<button class="qr_btn">
+							<img alt="" src="images/qr.png" id="qr_png" >
+						</button>
+					</div>
+					<!--미니 버튼 끝 -->
+					<li id="menu_la">
+						<a href="a_myPage.do"><img src="images/my.png" id="my_png"></a>
 					</li>
-					<li id="menu_list">
-					<a href="b_list.do"><img src="images/list_1.png" id="list_png"></a>
+					<li id="menu_la">
+						<a href="b_list.do"><img src="images/list.png" id="list_png"></a>
+					</li>
+					<li id="menu_out">
+						<a href="a_logout.do"><img src="images/logout.png" id="out_png"></a>
 					</li>
 				</ul>
 			</div>
 				<!-- 이미지링크 -->
-				<div>
 					<ul>
 						<li>
 						<a href=https://github.com/ target="_blank" class="mpg"><img src="images/link1.png">
@@ -186,8 +249,8 @@
 					<ul id="ul2">
 								<c:if test="${list==null}">
 									<c:forEach begin="1" end="8" step="1" varStatus="vs">
-										<li>
-											<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
+										<li class="mpg1">
+											<a target="_blank" class="mpg mpg_1"><img src="images/plus.png"></a>
 										</li>
 									</c:forEach>
 								</c:if>
@@ -196,27 +259,28 @@
 									<c:forEach items="${list}" var="ldto" varStatus="vs">
 											<c:if test="${ldto.purl!=null}">
 												<c:if test="${vs.index<4 }">
-													<li>
-														<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link3.png"><div class="loc3">${ldto.pname}</div></a>
+													<li class="mpg1">
+														<a href=${ldto.purl } target="_blank" class="mpg" style="height: 96px;"><img src="images/link3.png"><div class="loc3">${ldto.pname}</div></a>
+														<div class="M_delBtn" id="${ldto.pno}"><i class="fa fa-trash" aria-hidden="true"><strong style="font-family: fontYouandiModernTR;"></strong></i></div>
 													</li>
 												</c:if>
 												<c:if test="${vs.index>=4 }">
-														<li>
-															<a href=${ldto.purl } target="_blank" class="mpg" id="modal"><img src="images/link4.png"><div class="loc3">${ldto.pname}</div></a>
+														<li class="mpg1">
+															<a href=${ldto.purl } target="_blank" class="mpg" style="height: 96px;"><img src="images/link4.png"><div class="loc3">${ldto.pname}</div></a>
+														<div class="M_delBtn" id="${ldto.pno}"><i class="fa fa-trash" aria-hidden="true"><strong style="font-family: fontYouandiModernTR;"></strong></i></div>	
 														</li>
 												</c:if>
 											</c:if>
 									</c:forEach>
 								<c:forEach var="c" begin="${list_size+1}" end="8" step="1">
 											<c:if test="${ldto.purl==null}">
-												<li>
-													<a target="_blank" class="mpg mpg1" id="modal"><img src="images/plus.png"></a>
+												<li class="mpg1 mpg_1">
+													<a target="_blank" class="mpg Plus"><img src="images/plus.png"></a>
 												</li>
 											</c:if>
 								</c:forEach>
 								</c:if>
 					</ul>
-				</div>
 				<h1 id="h1"><strong style=" color:#0038a8">JJA</strong>GEUL</h1>
 				<h3>
 					한국 직업전문학교 copyright © ★항공 JAVA 풀스택 개발자 양성과정 5기★ - 2팀( 최창윤 | 조민진 | 정보람 | 김승우 )

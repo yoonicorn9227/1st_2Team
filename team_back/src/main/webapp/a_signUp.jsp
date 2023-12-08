@@ -16,8 +16,8 @@
 	    
 	    	//------------------------------------
 			 $("#subBtn").click(function(){
-				 if($("#id").val().length<2){
-					 alert("아이디를 입력하셔야 합니다.");
+				 if($("#id").val().length<3){
+					 alert("아이디를 3글자 이상 입력해주세요.");
 					 $("#id").focus();
 					 return false;
 				 }//if-id

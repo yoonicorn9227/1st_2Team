@@ -77,10 +77,10 @@ public class Stu_memberDao {
 				pstmt.setString(1, smdto2.getId());
 				pstmt.setString(2, smdto2.getPw());
 				pstmt.setString(3, smdto2.getName());
-				pstmt.setString(4, smdto2.getP_num());
-				pstmt.setString(5, smdto2.getPhone());
-				pstmt.setString(6, smdto2.getEmail());
-				pstmt.setString(7, smdto2.getGender());
+				pstmt.setString(4, smdto2.getGender());
+				pstmt.setString(5, smdto2.getP_num());
+				pstmt.setString(6, smdto2.getPhone());
+				pstmt.setString(7, smdto2.getEmail());
 				pstmt.setString(8, smdto2.getRegion());
 				result =pstmt.executeUpdate();
 			}catch (Exception e) {e.printStackTrace();

@@ -13,10 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 
 import com.java.www.dao.linkDao;
-import com.java.www.dto.linkDto;
 
-@WebServlet("/MD_Insert")
-public class MD_Insert extends HttpServlet {
+@WebServlet("/MD_Delete")
+public class MD_Delete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,25 +24,21 @@ public class MD_Insert extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String id = request.getParameter("id");
-		String webName = request.getParameter("webName");
-		String webURL = request.getParameter("webURL");
+		int pno = Integer.parseInt(request.getParameter("pno"));
 		System.out.println("id : " + id);
-		System.out.println("ajax webName : " + webName);
-		System.out.println("ajax webURL : " + webURL);
+		System.out.println("ajax pno: " + pno);
 
 		// dao 접근
 		linkDao ldao = new linkDao();
-		linkDto ldto = ldao.dao_ModalInsert(id, webName, webURL);
+		int result = ldao.dao_ModalDelete(id, pno);
 
-		System.out.println("ser_ModalInsert ldto Pname : " + ldto.getPname());
-		System.out.println("ser_ModalInsert ldto purl : " + ldto.getPurl());
-
-		//json 형태로 보내기 
-		JSONObject json = new JSONObject();
-		json.put("webName",ldto.getPname());
-		json.put("webURL",ldto.getPurl());
-		//json.put("pno",ldto.getPno());
+		System.out.println("ser_ModalDelete result : " + result);
 		
+		//하단 댓글 1개 ajax으로 보내기
+		//json형태로 보내기 또는 xml ->html - 자바jsp
+		JSONObject json = new JSONObject();
+		json.put("result",result); //key, value
+
 		response.setContentType("application/x-json; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
 		writer.print(json);
@@ -61,4 +56,4 @@ public class MD_Insert extends HttpServlet {
 		doAction(request, response);
 	}// doPost
 
-}// SerVlet(모달 컨트롤러)
+}

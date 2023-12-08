@@ -10,27 +10,45 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     	<script>
 			$(function(){
+				
 				$("#signUpBtn").click(function(){
 					alert("회원가입 페이지로 이동합니다.")
 					location.href="a_signUp.do";
 				});//#회원가입
+		    //----------------아이디 저장하기--------------------
+				var savedId = localStorage.getItem("rememberedId");
+				
+				if(savedId){
+					$("#id").val(savedId);
+					$("#remember-check").prop("checked",true);
+				}
 				
 				$("#loginBtn").click(function(){
-					
-					if($("#id").val().length<3){
+					var enteredId = $("#id").val();
+			        var enteredPw = $("#pw").val();
+			       
+					if(enteredId.length<3){
 					alert("아이디를 다시 입력하세요.")
 					$("#id").focus();
 					return false
 					}//if-로그인 유효성
 					
-					if($("#pw").val().length<4){
+					if(enteredPw.length<4){
 					alert("비밀번호를 다시 입력하세요.")
 					$("#pw").focus();
 					return false
 					}//if-비밀번호 유효성
+					
+					if($("#remember-check").is(":checked")){
+						localStorage.setItem("rememberedId", enteredId);
+					}
+					
 					loginFrm.submit();
 				});//로그인버튼
+				//----아이디 저장하기 체크박스 시작-------	
+			
 			});//제이쿼리 구문
+		</script>
 		</script>
     </head>
     <body>

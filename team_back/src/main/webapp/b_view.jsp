@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <c:if test="${session_id==null}">
+		<script>
+			alert("로그인을 해야만 접속이 가능합니다.");
+			location.href="a_login.do";
+		</script>
+	</c:if>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/like-dislike.js"></script>
     <title>요청게시판-b_view.jps</title>
      <link rel="stylesheet" href="css/css.css">
      <link href="https://fonts.cdnfonts.com/css/nasa" rel="stylesheet">
@@ -25,7 +35,41 @@
 		.border{color: #FFD500; font-weight: 700; font-size: 20px; margin-top: 120px;}
 		#team{position: relative; left: 500px;}
 		#info_m{width: 350px;}
-		#bfile:hover{text-decoration: underline; color: blue; font-weight: 700}
+		
+		.likebox {
+		    font-size: 25px; font-weight:700;
+		    background-size: cover;
+		    width: 85px;
+		    height: 85px;
+		    transition: background-image 0.5s ease-in-out;
+		    position: relative;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    margin:0 auto;
+		}
+		
+		.likebox .likeNo {
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    color: #003F88;
+		}
+		
+		.likebox:hover {
+		    background-image: url('./images/icon-heart_ani.gif');
+		}
+				
+		
+		.likebox:hover .likeNo {
+		    top: 50%; /* Adjust as needed */
+		    left: 50%; /* Adjust as needed */
+		    transform: translate(-50%, -50%);
+		}
+
+       
+		
 	</style>
 	
 	<script>
@@ -35,9 +79,73 @@
 					location.href="b_delete.do?page=${page}&bsno=${sbdto.bsno}";
 					
 				}
-			})
-		})
+			});
+		});//j
+		
+		
+		
+		$(function(){
+			var bsno = "${sbdto.bsno}";
+			var myLike = "${my_like_count}";
+			var htmlData ="";
+			
+			$(".likebox").click(function(){
+				if(myLike==0){
+					
+					var num=Number($(".likeNo").text())+1;
+					myLike = 1;
+					
+					//a
+					$.ajax({
+						url:"MyLikeUpdate",
+						type:"post",
+						data:{"bsno":bsno,"like_status":1},
+						dataType:"json",
+						success:function(data){
+							alert("좋아요 추가1 성공");
+							alert("좋아요 총개수 :"+data.all_like_count);
+							$(".likebox:hover").css("background-image","url('')");
+							htmlData = '';
+							htmlData += '<img src="./images/icon-heart_2.png"><span class="likeNo">'+num+' </span>';
+							$(".likebox").html(htmlData);
+						},
+						error:function(){
+							alert("실패");
+						}
+					});//a
+					
+					
+				}else{
+					var num=Number($(".likeNo").text())-1;
+					myLike=0;
+					//a
+					$.ajax({
+						url:"MyLikeUpdate",
+						type:"post",
+						data:{"bsno":bsno,"like_status":0},
+						dataType:"json",
+						success:function(data){
+							alert("좋아요 취소 성공");
+							$(".likebox:hover").css("background-image","");
+							alert("좋아요 총개수 : "+data.all_like_count);
+							htmlData ='';
+							htmlData += '<img src="./images/icon-heart.png"><span class="likeNo"> '+num+' </span>';
+							$(".likebox").html(htmlData);
+						},
+						error:function(){
+							alert("실패");
+						}
+					});//a
+					
+					
+				}
+			});
+	});//j
+	
+	
+		
 	</script>
+	
 	
 </head>
 <header>
@@ -78,15 +186,47 @@
                         <dt>작성일</dt>
                         <dd><fmt:formatDate value="${sbdto.bdate}" pattern="yyyy-MM-dd"/></dd>
                     </dl>
-                  	<dl>
-                      <dt>첨부파일</dt>
-                      <dd id="bfile"><a href="upload/${sbdto.bfile}" target="_blank">${sbdto.bfile}</a></dd>
+                    <dl>
+                        <dt>첨부파일</dt>
+                        <dd><a href="upload/${sbdto.bfile}" target="_blank">${sbdto.bfile}</a></dd>
                     </dl>
                 </div>
                 <div class="cont">
                     ${sbdto.bcontent}
                 </div>
+                
+                <!-- 다음글이전글 -->
+                <div class="pn">
+                	<dl>
+                		<dt class="comment"><strong>다음글</strong> <span> ▲ </span>
+                		<a href="b_view.do?page=${page}&bsno=${nextDto.bsno}&category=${category}&sword=${sword}">${nextDto.btitle}</a>
+                		</dt>
+                	</dl>
+                	<dl>
+                		<dt class="comment"><strong>이전글</strong> <span> ▼ </span>
+                		<a href="b_view.do?page=${page}&bsno=${preDto.bsno}&category=${category}&sword=${sword}">${preDto.btitle}</a>
+                		</dt>
+                	</dl>
+                </div>
+                <!-- 다음글이전글 끝 -->
+                
+            
+            <!-- 좋아요 -->
+            <div class="likebox">
+            		<c:if test="${my_like_count==1}">
+            			
+            			<img src="./images/icon-heart_2.png"><span class="likeNo">${all_like_count}</span>
+            		</c:if>
+            		<c:if test="${my_like_count!=1}">
+            			<img src="./images/icon-heart.png"><span class="likeNo">${all_like_count}</span>
+            		</c:if>
+           	</div>
+			<!-- 좋아요 끝-->
+            
             </div>
+            
+			
+			
             <div class="bt_wrap">
                 <a href="b_reply.do?page=${page}&bsno=${sbdto.bsno}" class="on">답글달기</a>
                 <a href="b_edit.do?page=${page}&bsno=${sbdto.bsno}" class="on">작성글 수정</a>

@@ -37,7 +37,7 @@ public class linkDao {
 	public ArrayList<linkDto> dao_ModalInstList(String id2) {
 		try {
 			conn = getConnection();
-			query = "select * from link where id =?";
+			query = "select * from link where id =? order by pno asc";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id2);
 			rs = pstmt.executeQuery();
@@ -47,7 +47,7 @@ public class linkDao {
 				pname = rs.getString("pname");
 				purl = rs.getString("purl");
 				pfile = rs.getString("pfile");
-				System.out.println("pno : " + pno);
+				System.out.println("dao_ModalList pno : " + pno);
 				System.out.println("id : " + id);
 				System.out.println("pname : " + pname);
 				System.out.println("purl : " + purl);
@@ -96,7 +96,7 @@ public class linkDao {
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				pno = rs.getInt("pno");
-				System.out.println("dao MD_insert pno"+pno);
+				System.out.println("dao MD_insert pno : "+pno);
 			}//while
 			
 			//insert - 즐겨찾기 1개 저장
@@ -133,5 +133,23 @@ public class linkDao {
 		return ldto;
 	}//linkDto
 
-
+	public int dao_ModalDelete(String id2, int pno2) {
+		try {
+			conn=getConnection();
+			query="delete from link where id=? and pno=?";
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, id2);
+			pstmt.setInt(2, pno2);
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e2) {e2.printStackTrace();}
+		} // try
+		return result;
+	}//dao_ModalDelete()
 }// linkDao
