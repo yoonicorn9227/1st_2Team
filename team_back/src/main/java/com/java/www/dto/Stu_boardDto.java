@@ -15,7 +15,9 @@ public class Stu_boardDto {
 	private int bhit;
 	private String bfile;
 
-	public Stu_boardDto() {}// 기본생성자
+	public Stu_boardDto() {
+	}// 기본생성자
+
 	public Stu_boardDto(int bsno, String btitle, String bcontent, Timestamp bdate, String id, int bgroup, int bstep,
 			int bindent, int bhit, String bfile) {
 		this.bsno = bsno;
@@ -29,6 +31,7 @@ public class Stu_boardDto {
 		this.bhit = bhit;
 		this.bfile = bfile;
 	}// 전체생성자(10개)
+
 	public Stu_boardDto(int bsno, String btitle, String bcontent, String id, String bfile) {
 		this.bsno = bsno;
 		this.btitle = btitle;
@@ -36,12 +39,14 @@ public class Stu_boardDto {
 		this.id = id;
 		this.bfile = bfile;
 	}
+
 	public Stu_boardDto(String btitle, String bcontent, String id, String bfile) {
 		this.btitle = btitle;
 		this.bcontent = bcontent;
 		this.id = id;
 		this.bfile = bfile;
 	}
+
 	public Stu_boardDto(String btitle, String bcontent, String id, int bgroup, int bstep, int bindent, String bfile) {
 		this.btitle = btitle;
 		this.bcontent = bcontent;
@@ -51,8 +56,8 @@ public class Stu_boardDto {
 		this.bindent = bindent;
 		this.bfile = bfile;
 	}
-	
-	//♣Getter&Setter
+
+	// ♣Getter&Setter
 	public int getBsno() {
 		return bsno;
 	}

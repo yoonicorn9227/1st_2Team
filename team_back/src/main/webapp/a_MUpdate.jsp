@@ -47,7 +47,6 @@
     		});//#resBtn
     	
     		$("#pw2").keyup(function(){
-
     			if($("#pw2").val()=="" || $("#pw1").val()==""){
 					 $("#pwCheck").text("※비밀번호를 다시한번 입력해주세요.");
 					 $("#pwCheck").css("color","#fff");
@@ -74,44 +73,44 @@
 	    <table>
 			<h1 id="idtitle">[${session_name}]님 회원정보 수정</h1>
 			<tr>
-			<th>아 이 디 :</th> 
-				<td class="Mup">${smdto.id} </td>
+			<th>아 이 디 </th>
+				<td class="Mup"><p class="in">${smdto.id}</p></td>
 			</tr>
 			<tr>
-			<th>패스워드 :</th>
+			<th><p class="wide">패스워드</p></th>
 				<td id="pwCon">
 					<input type="password" name="pw1" id="pw1" placeholder="Password" >
 					<div id="pwt">※비밀번호 4자리 이상</div>
 				</td>
 				
 			</tr>
-			<th>패스워드 확인 :</th>
+			<th><p class="wide">패스워드 확인</p></th>
 				<td>
 					<input type="password" name="pw2" id="pw2" placeholder="비밀번호 재입력" >
 					<div id="pwCheck">※비밀번호를 다시한번 입력해주세요.</div>
 				</td>
 			</tr>
 			<tr>
-			<th>회원이름 :</th>
-				<td class="Mup">${smdto.name}</td>
+			<th>회원이름</th>
+				<td class="Mup"><p class="in">${smdto.name}</p></td>
 			</tr>
 			<tr>
-			<th>주민번호 :</th>
-				<td class="Mup">${smdto.p_num}</td>
+			<th>주민번호</th>
+				<td class="Mup"><p class="in">${smdto.p_num}</p></td>
 			</tr>
 			<tr>
-			<th>휴대전화 :</th>
+			<th><p class="wide">휴대전화</p></th>
 				<td><input type="text" name="phone" id="phone" value="${smdto.phone}"></td>
 			</tr>
-			<th>e-mail :</th>
+			<th><p class="wide">e-mail</p></th>
 				<td><input type="text" name="email" id="email" value="${smdto.email}"></td>
 			</tr>
 			<tr>
-			<th>회원성별 :</th>
-				<td class="radio_change Mup">${smdto.gender}</td>
+			<th>회원성별</th>
+				<td class="radio_change Mup"><p class="in">${smdto.gender}</p></td>
 			</tr>
 			<tr>
-				<th>※주   소※</th>
+				<th><p class="ad">※주   소※<p></th>
 				<td class="radio_change">
 				<input type="checkbox" name="region" id="Seoul" value="서울"
 				<c:if test="${fn:contains(smdto.region,'서울')}">checked</c:if>>
@@ -135,12 +134,11 @@
 			</tr>
 			<tr>
 				<td colspan="2" id="selBtn">
-					<button type="button" id="MUpdateBtn">회원수정</button>
-					<button type="button" id="resBtn">메인화면</button>
+					<button type="button" id="MUpdateBtn"><p class="bbtn">회원수정</p></button>
+					<button type="button" id="resBtn"><p class="bbtn">메인화면</p></button>
 				</td>
 			</tr>
 	</form>
-
 	<video id="video" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
     	<source src="images/main_background.mp4">
     </video>

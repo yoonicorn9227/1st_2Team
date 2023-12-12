@@ -1,10 +1,13 @@
 package com.java.www.service;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.java.www.dao.Stu_boardDao;
+import com.java.www.dto.ScommentDto;
 import com.java.www.dto.Stu_boardDto;
 
 public class Ser_ListSelectOne implements Service {
@@ -40,6 +43,7 @@ public class Ser_ListSelectOne implements Service {
 		// ------좋아요 (id,bsno)
 		int my_like_count = sbdao.myLikeSelect(id, bsno);
 		int all_like_count = sbdao.allLikeSelect(bsno);
+		ArrayList<ScommentDto> slist = sbdao.commSelectAll(bsno);
 
 		// request추가
 		request.setAttribute("sbdto", sbdto);
@@ -50,6 +54,8 @@ public class Ser_ListSelectOne implements Service {
 		request.setAttribute("sword", sword);
 		request.setAttribute("my_like_count", my_like_count);
 		request.setAttribute("all_like_count", all_like_count);
+		request.setAttribute("slist", slist);
+		request.setAttribute("ccount", slist.size());
 
 	}// execute(Ser_ListSelectOne)
 }// CLASS(게시글 1개)

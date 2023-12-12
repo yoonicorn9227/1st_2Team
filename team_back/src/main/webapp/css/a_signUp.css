@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 body {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	margin: 0;
@@ -10,7 +9,6 @@ body {
 	min-height: 100vh;
 	background: url('../images/main_background.mp4');
 }
-
 form {
 	background :rgba(0,0,0,0.7);
 	padding: 30px;
@@ -21,27 +19,23 @@ form {
 	align-items: center;
 	width: 800px;
 }
-
 label {
 	font-size: 14px;
 	margin-bottom: 8px;
 	color:  #fff;
 }
-
 input {
 	width: 300px;
 	padding: 10px;
 	margin-bottom: 16px;
 	box-sizing: border-box;
-	border: 1px solid #ced4da;
+	border: 1px solid #CED4DA;
 	border-radius: 4px;
 	font-size: 14px;
 }
-
 .radio_change input {width:7%;}
-
 button {
-	background-color: #007bff;
+	background-color: #007BFF;
 	color: #fff;
 	padding: 12px;
 	border: none;
@@ -49,21 +43,19 @@ button {
 	cursor: pointer;
 	font-size: 16px;
 	height: 40px;
-	position: relative; 
+	position: relative;
 	top:4px;
 	margin-right: 10px;
+	margin-bottom: 5px;
 }
-
 .subBtn, .resBtn {
     display: inline-block;
 }
-
 span{
       display: inline-block; /* 인라인 블록 요소로 설정하여 버튼 옆에 표시 */
  }
-
 span.error-message {
-	color: #dc3545;
+	color: #DC3545;
 	margin-bottom: 16px;
 	width: 100%;
 	text-align: center;
@@ -71,7 +63,8 @@ span.error-message {
 }
 /*패스워드*/
 #pwCon {display: flex;}
-#pw1 { margin-right: 10px;}
+#pw1 { margin-right: 10px; margin:0px 10px 0px 0px;}
+#pw2{margin-bottom: 14px;}
 #pwt{
 	margin-top: 5px;
 	 height: 23px;
@@ -89,9 +82,9 @@ span.error-message {
 }
 #selBtn{text-align: center;}
 th{color:  #fff;}
-td{width: 500px; }
+td{width: 500px; margin-bottom: 14px; }
 table{margin:0 auto; }
-h1{color: #fed000;}
+h1{color: #FED000;}
 #video {
 	position: absolute;
 	top: 0px;
@@ -104,3 +97,13 @@ h1{color: #fed000;}
 	overflow: hidden;
 }
 .Mup{color: greenyellow; }
+/* 회원수정 간격조정 */
+.wide {margin: 3px 5px 14px;}
+.in{margin:8px 7px 9px;}
+.bbtn{ margin-top: -4px;}
+.ad{margin: 5px 0px 10px;}
+/*회원가입 간격조정*/
+.letter{margin-top: -2.5px;}
+.letter2{margin: -15px 10px 0px;}
+.letter3{margin: -2.3px 0px 12px;}
+.letter4{margin: -1.1px 0px 5px;}

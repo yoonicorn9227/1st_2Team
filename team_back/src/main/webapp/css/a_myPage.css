@@ -69,6 +69,7 @@ th{color:  #fff;}
 td{width: 300px; color: #fff;  text-align: center;}
 table{margin:0 auto; }
 h1{color: #fed000;}
+span{color:  greenyellow;}
 #video {
 	position: absolute;
 	top: 0px;
@@ -80,3 +81,5 @@ h1{color: #fed000;}
 	z-index: -1;
 	overflow: hidden;
 }
+td{color:  greenyellow;}
+#pw{color: #fff; margin: 0; text-align: center; background: transparent; width: 100px; height:10px; border: 1px solid transparent;  font-size: 20px;} 

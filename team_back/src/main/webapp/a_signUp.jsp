@@ -13,7 +13,7 @@
 	    		alert("회원가입을 취소하셨습니다. ※로그인 페이지로 이동합니다.")
 	    		location.href="a_login.do";
 	    	});//#retBtn
-	    
+	   
 	    	//------------------------------------
 			 $("#subBtn").click(function(){
 				 if($("#id").val().length<3){
@@ -21,29 +21,35 @@
 					 $("#id").focus();
 					 return false;
 				 }//if-id
-				 
+				
 				if($("#pw1").val().length<4){
 					alert("비밀번호는 4자리 이상 입력해주세요.");
 					$("#pw1").focus();
 					return false;
 				}//if-pw1
-				 
+				
 				 if($("input[name='region']:checked").length!=1){
 					 alert("지역은 1개만 선택 하셔야합니다.");
 					 return false;
 				 }//if-region
-				 
+				
 				 alert("회원정보를 저장합니다.");
 				 signFrm.submit();
 			 });//#subBtn
 			 //-----------------------------------
 			 $("#pw1").keyup(function(){
+				 if($("#pw1").val()==""){
+					 $("#pwt").text("※비밀번호 4자리 이상");
+					 $("#pwt").css("color","#fff");
+					 return false;
+    			}//if(미입력시)	
 				 if($("#pw1").val().length<4){
 					 $("#pwt").css("color","red");	
 				 }else{
 					 $("#pwt").text("비밀번호 조건충족");
-					 $("#pwt").css("color","#fff");
-				}
+					 $("#pwt").css("color","greenyellow");
+				}//if-else
+					
 			});//#pw1-비밀번호 4자리이상
 			 //-----------------------------------
 			 $("#pw2").keyup(function(){
@@ -62,7 +68,7 @@
 			 });//#pw2-비밀번호 중복확인
 			 //id체크
 			 var idConfirm = 0;
-			 
+			
 			 $("#idCheck").click(function(){
 				 alert("아이디를 중복 체크 합니다.");
 				 var id = $("#id").val();
@@ -87,7 +93,7 @@
 					 error:function(){
 						 alert("실패");
 					 }//error
-					 
+					
 				 })//ajax
 			  });//#idCheck
 			//-----------------------------------------
@@ -95,7 +101,7 @@
 			
 			
 			
-			 
+			
 		 });//제이쿼리 구문최신
     </script>
 </head>
@@ -104,7 +110,7 @@
 	    <table>
 			<h1 id="idtitle">회원가입</h1>
 			<tr>
-			<th>아 이 디</th>
+			<th><p class="letter">아 이 디</p></th>
 				<td >
 					<input type="text" name="id" id="id" placeholder="ID">
 					<button type="button" id="idCheck" value="중복확인">중복확인</button><span id="txtIdChk"></span>
@@ -112,36 +118,36 @@
 				</td>
 			</tr>
 			<tr>
-			<th>패스워드 :</th>
+			<th><p class="letter">패스워드</p></th>
 				<td id="pwCon">
 					<input type="password" name="pw1" id="pw1" placeholder="Password" >
 					<div id="pwt">※비밀번호 4자리 이상</div>
 				</td>
 				
 			</tr>
-			<th>패스워드 확인 :</th>
+			<th><p class="letter2">패스워드 확인</p></th>
 				<td>
-					<input type="password" name="pw2" id="pw2" placeholder="비밀번호 재입력" >
+					<input type="password" name="pw2" id="pw2" class="inpw" placeholder="비밀번호 재입력" >
 					<div id="pwCheck">※비밀번호를 다시한번 입력해주세요.</div>
 				</td>
 			</tr>
 			<tr>
-			<th>회원이름 :</th>
+			<th><p class="letter">회원이름</p></th>
 				<td><input type="text" name="name" id="name" placeholder="성명"></td>
 			</tr>
 			<tr>
-			<th>주민번호 :</th>
+			<th><p class="letter">주민번호</p></th>
 				<td><input type="text" name="p_num" id="p_num" placeholder="YYMMDD-1234567"></td>
 			</tr>
 			<tr>
-			<th>휴대전화 :</th>
+			<th><p class="letter">휴대전화</p></th>
 				<td><input type="text" name="phone" id="phone" placeholder="ex) 010-1234-5678"></td>
 			</tr>
-			<th>e-mail :</th>
+			<th><p class="letter">e-mail</p></th>
 				<td><input type="text" name="email" id="email" placeholder="ex) korev05@emali.com"></td>
 			</tr>
 			<tr>
-			<th>회원성별 :</th>
+			<th><p class="letter3">회원성별</p></th>
 				<td class="radio_change">
 					<input type="radio" name="gender" id="Male" value="Male">
 					<label for="Male">남자</label>
@@ -150,7 +156,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>주   소</th>
+				<th><p class="letter4">주   소</p></th>
 				<td class="radio_change">
 				<input type="checkbox" name="region" id="Seoul" value="서울">
 				<label for="서울">서울</label>
@@ -173,9 +179,8 @@
 				</td>
 				
 			</tr>
-	    
+	   
 	</form>
-
 	<video id="video" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
     	<source src="images/main_background.mp4">
     </video>

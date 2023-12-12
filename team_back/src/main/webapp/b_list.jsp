@@ -46,15 +46,14 @@
 					alert("검색어를 입력하셔야 합니다.");
 					$("#sword").focus();
 					return false;
-				}
+				}//if
 				searchFrm.submit();
-			})
-		})//j
-	
+			});//#sbtn
+		});//제이쿼리 최신
 	</script>
 <body>
 	<header>
-   	 <h1 class="logo"><a href="">JJAGEUL</a></h1>
+   	 <h1 class="logo"><a href="a_main.do">JJAGEUL</a></h1>
     	<nav>
 	    	<ul>
 		        <li id="logo_name">${session_name}님</li>

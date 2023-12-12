@@ -33,14 +33,14 @@
 <body>
 	<form name="MUpdateFrm" method="post" action="a_MUpdate.do">
 	    <table>
-			<h1 id="idtitle">[${session_name}] 회원님 정보</h1>
+			<h1 id="idtitle">[<span>${session_id}</span>]회원님 정보</h1>
 			<tr>
 			<th>아 이 디</th>
 				<td>${smdto.id}</td>
 			</tr>
 			<tr>
 			<th>패스워드</th>
-				<td>${smdto.pw}</td>
+				<td><input id="pw" type="password" value="${smdto.pw}" readonly="readonly" style="text-align: center; background: transparent; width: 100px; height:10px" ></td>
 			</tr>
 			<tr>
 			<th>회원이름</th>

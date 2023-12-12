@@ -44,10 +44,29 @@
 				w_frm.submit();
 			})//.on
 		})//제이쿼리 최신
+		
+		document.addEventListener('DOMContentLoaded', function() {
+            var fileInput = document.getElementById('bfile');
+            var preview = document.getElementById('previewImage');
+            fileInput.addEventListener('change', function(event) {
+                previewImage(event);
+            });
+            function previewImage(event) {
+                var input = event.target;
+                var reader = new FileReader();
+                reader.onload = function(){
+                    preview.src = reader.result;
+                };
+                // Read the image file as a data URL
+                if (input.files && input.files[0]) {
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        });
 	</script>
 <body>
 	<header>
-		<h1 class="logo"><a href="">JJAGEUL</a></h1>
+		<h1 class="logo"><a href="a_main.do">JJAGEUL</a></h1>
 		<nav>
 			<ul>
 				<li id="logo_name">${session_name}님</li>
@@ -85,7 +104,7 @@
 					<dl>
 						<dt>첨부파일</dt>
 						<dd>
-							<input type="file" name="bfile" id="bfile">
+							<input type="file" name="bfile" id="bfile"> <img id="previewImage" style="width:50px; vertical-align: middle; margin-left:20px;">
 						</dd>
 					</dl>
 				</div>

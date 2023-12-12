@@ -25,7 +25,7 @@ a {text-decoration: none; color: inherit;}
 
 .bt_wrap a.on {background: #003F88; color: #FDC500;}
 
-.bt_wrap a.on:hover {background: #FDC500; color: #003F88; border: 1px solid #FDC500;}
+.bt_wrap a.on:hover {background: #FDC500; color: #003F88; border: 1px solid #FDC500; cursor: pointer;}
 
 .board_list {width: 100%; border-top: 2px solid #00296B;}
 
@@ -74,6 +74,8 @@ a {text-decoration: none; color: inherit;}
 .board_view .info {padding: 15px; border-bottom: 1px solid #00296B; font-size: 0;}
 
 .board_view .info dl {position: relative; display: inline-block; padding: 0 20px;}
+
+.board_view .info .line {border-right: 1px solid #ddd;}
 
 .board_view .info dl:first-child {padding-left: 0;}
 

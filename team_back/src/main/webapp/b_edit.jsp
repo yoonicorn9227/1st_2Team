@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +9,12 @@
 		<script>
 			alert("로그인을 해야만 접속이 가능합니다.");
 			location.href="a_login.do";
+		</script>
+	</c:if>
+    <c:if test="${session_id!=sbdto.id}">
+		<script>
+			alert("글 작성자만 수정이 가능합니다.");
+			location.href="b_view.do?page=${page}&bsno=${sbdto.bsno}";
 		</script>
 	</c:if>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,12 +42,12 @@
 			$(".on").click(function(){
 				alert("파일을 첨부합니다.");
 				e_frm.submit();
-			})
-		})
+			});//.on
+		});//제이쿼리 최신
 	</script>
 </head>
 <header>
-   	 <h1 class="logo"><a href="">JJAGEUL</a></h1>
+   	 <h1 class="logo"><a href="a_main.do">JJAGEUL</a></h1>
     	<nav>
 	    	<ul>
 		        <li id="logo_name">${session_name}님</li>
@@ -80,7 +87,7 @@
 					</dl>
 					<dl>
 						<dt>첨부파일</dt>
-						<dd><input type="file" name="bfile" id="bfile">${sbdto.bfile}</dd>
+						<dd><input type="file" name="bfile" id="bfile">${sbdto.bfile}<img src="upload/${sbdto.bfile}" style="width:50px; vertical-align: middle; margin-left:20px;"></dd>
 					</dl>
 				</div>
 				<div class="cont">

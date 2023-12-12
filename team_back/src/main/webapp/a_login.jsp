@@ -17,16 +17,14 @@
 				});//#회원가입
 		    //----------------아이디 저장하기--------------------
 				var savedId = localStorage.getItem("rememberedId");
-				
 				if(savedId){
 					$("#id").val(savedId);
 					$("#remember-check").prop("checked",true);
-				}
+				}//if
 				
 				$("#loginBtn").click(function(){
 					var enteredId = $("#id").val();
 			        var enteredPw = $("#pw").val();
-			       
 					if(enteredId.length<3){
 					alert("아이디를 다시 입력하세요.")
 					$("#id").focus();
@@ -41,14 +39,11 @@
 					
 					if($("#remember-check").is(":checked")){
 						localStorage.setItem("rememberedId", enteredId);
-					}
-					
+					}else{localStorage.removeItem("rememberedId");}//if-else
 					loginFrm.submit();
 				});//로그인버튼
 				//----아이디 저장하기 체크박스 시작-------	
-			
 			});//제이쿼리 구문
-		</script>
 		</script>
     </head>
     <body>

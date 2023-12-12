@@ -28,7 +28,7 @@ public class Ser_Write implements Service {
 		Stu_boardDto sbdto = null;
 		//파일선언
 		String upath = "c:/upload";
-		int size = 10*1024*1024;
+		int size = 1000*1024*1024;
 		
 		//파일이름 가져오기
 		try {

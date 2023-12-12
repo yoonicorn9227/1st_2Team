@@ -98,7 +98,7 @@ body {
 }
 
 #GEUL {
-	color: #0038a8;
+	color: #0038a8;  
 }
 
 #video {
@@ -112,3 +112,4 @@ body {
 	z-index: -1;
 	overflow: hidden;
 }
+
